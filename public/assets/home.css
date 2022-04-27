@@ -5,6 +5,9 @@ body{
     line-height: 1.42857143;
     color: #333;
     background: url(../images/Main_bg.svg) no-repeat 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 
 }
 div{

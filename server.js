@@ -5,6 +5,7 @@ const session = require('express-session') //Create a local-session
 const res = require('express/lib/response')
 const methodOverride = require("method-override") //To override Post method with Delete
 const path = require('path');
+const { PDFNet } = require('@pdftron/pdfnet-node')
 
 app.use(session({
 	secret: 'secret',
@@ -161,8 +162,10 @@ app.post('/ciform', function(req, res){
     const email = req.body.email
     const address = req.body.StreetName + ', ' + req.body.Zip + ' ' + req.body.City
     const gender = req.body.Gender
+    const phone = req.body.phone
     const birthday = req.body.birthday
     const assignedsa = req.body.assignedsa
+    const weigh = req.body.weigh
     const findingmethod = req.body.findingmethod
     const job = req.body.job
     const notescl = req.body.notescl
@@ -172,15 +175,39 @@ app.post('/ciform', function(req, res){
     const subgoals = req.body.subgoals
     const dreamgoal = req.body.dreamgoal
     const goalswhy = req.body.goalswhy
-    const weightnow = req.body.weightnow
+    const weighnow = req.body.weighnow
     const musclenow = req.body.musclenow
     const fatnow = req.body.fatnow
-    const weightdream = req.body.weightdream
+    const weighdream = req.body.weighdream
     const muscledream = req.body.muscledream
     const fatdream = req.body.fatdream
     const pschedule = req.body.pschedule
     const trainingbudy = req.body.trainingbody
 
+    const inputPath = path.resolve(__dirname, './public/files/CI2022.pdf')
+    const outputpath = path.resolve(__dirname, `./public/files/CI-${req.body.FirstName}.pdf`)
+    
+    const replaceText = async() =>{
+        const pdfdoc = await PDFNet.PDFDoc.createFromFilePath(inputPath)
+        await pdfdoc.initSecurityHandler();
+        const replacer = await PDFNet.ContentReplacer.create()
+        const page = await pdfdoc.getPage(1);
+
+        await replacer.addString('date', '010101');
+        await replacer.addString('assignedsa', assignedsa);
+        await replacer.addString('name', name);
+        await replacer.addString('gender', gender);
+        await replacer.addString('telephone', phone);
+        await replacer.addString('address', address);
+        await replacer.addString('birthday', birthday);
+        await replacer.addString('email', email);
+
+        await replacer.process(page);
+
+        pdfdoc.save(outputpath, PDFNet.SDFDoc.SaveOptions.e_linearized);
+    }
+
+    PDFNet.runWithCleanup()
     
 })
 

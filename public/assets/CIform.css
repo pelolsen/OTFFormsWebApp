@@ -7,6 +7,7 @@ body{
     background: url(../images/Main_bg.svg) no-repeat 50%;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-size: cover;
 }
 div{
     display: block;
@@ -106,7 +107,7 @@ img{
 .row-name-mail{
     padding-top: 30px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .row-address{
