@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/assets/home.css" rel="stylesheet" type="text/css" />
+    <title>Home</title>
+</head>
+<body>
+    <div class="app-background">
+        <div class="header">
+            <div class="left">
+                <div class="home-button" onclick="window.location.href='/home'">
+                    <img src="../public/images/home-header.svg">
+                </div>
+                <div class="logo-challenge">
+                    <img src="../public/images/icon_home.svg">
+                    <div class="title">Orange-Forms</div>
+    
+                </div>
+            </div>
+            <div class="right">
+                <p> SUP <%- name %></p>
+                <form action="/logout?_method=DELETE" method="POST">
+                    <button>Log Out</button>
+                </form>
+            </div>
+    
+        </div>
+        <div class="menu-container">
+            <button class="form-button" onclick="window.location.href='/searchclientci'">CI-Form</button>
+            <button class="form-button">MA-Form</button>
+            <button class="form-button">Klippekort Aftale</button>
+            <button class="form-button">Bero Form</button>
+            <button class="form-button">Termination Form</button>
+        </div>
+    </div>
+</body>
+</html>

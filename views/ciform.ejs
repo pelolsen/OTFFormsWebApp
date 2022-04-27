@@ -1,0 +1,175 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/assets/CIform.css" rel="stylesheet" type="text/css" />
+    <title>CI Form</title>
+</head>
+<body>
+    <div class="app-background">
+        <div class="header">
+            <div class="left">
+                <div class="home-button" onclick="window.location.href='/home'">
+                    <img src="../public/images/home-header.svg">
+                </div>
+                <div class="logo-challenge">
+                    <img src="../public/images/icon_home.svg">
+                    <div class="title">Orange-Forms</div>
+    
+                </div>
+            </div>
+            <div class="right">
+                <p> Hello, <%- sa %></p>
+                <form action="/logout?_method=DELETE" method="POST">
+                    <button type="submit">Log Out</button>
+                </form>
+            </div>
+        </div>
+        <div class="rest-container">
+            <form action="/ciform" method="POST">
+                <div class="form-container">
+                    <div class="form-title">
+                        <p>Client Intake Form<p>
+                    </div>
+                    <div class="row-name-mail">
+                        <div class="input-form-container">
+                            <input class="input-form" id="FirstName" name="FirstName" value="<%- firstname %>" placeholder="First Name" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" id="LastName" name="LastName" value="<%- lastname %>" placeholder="Last Name" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" id="Email" name="Email" value="<%- email %>" placeholder="E-Mail" type="email">
+                        </div>
+                    </div>
+                    <div class="row-address">
+                        <div class="input-form-container">
+                            <input class="input-form" name="StreetName"
+                            id="StreetName" placeholder="Street Name" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" id="Zip" name="Zip" placeholder="ZIP" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" name="City" id="City" placeholder="City" type="text">
+                        </div>
+                    </div>
+                    <div class="row-birth-gender-weith-sa">
+                        <div class="input-form-container">
+                            <input class="input-form" id="Gender" name="Gender" value="<%- gender %>" placeholder="Gender" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" id="birthday" name="birthday" value="<%- birthday %>" placeholder="Birthday" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" id="weight" name="weigh" placeholder="Weigh" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" id="assignedsa" name="assignedsa" value="<%- sa %>" placeholder="Assigned SA" type="text">
+                        </div>
+                    </div>
+                    <div class="form-title-secondary">
+                        <p>Get to know the person:</p>
+                    </div>
+                    <div class="get-to-know">
+                        <div class="input-form-container">
+                            <input class="input-form" id="findingmethod" name="findingmethod" placeholder="How did you hear about us?" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" id="job" name="job" placeholder="What do you do daily?(Job)" type="text">
+                        </div>
+                    </div>
+                    <div class="get-to-know-s">
+                        <div class="input-form-container">
+                            <textarea name="notescl" id="notescl" class="text-form" maxlength="3000" type="text" placeholder="Notes from CL and extras"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-title-secondary">
+                        <p>Training Routine:</p>
+                    </div>
+                    <div class="get-to-know-s">
+                        <div class="input-form-container">
+                            <textarea name="training" id="training" class="text-form" maxlength="3000" type="text" placeholder="What do you do in terms of training? How Often?"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-title-secondary">
+                        <p>Injuries:</p>
+                    </div>
+                    <div class="get-to-know-s">
+                        <div class="input-form-container">
+                            <textarea name="injuries" id="injuries" class="text-form" maxlength="3000" type="text" placeholder="Any injuries or anything that might limit you?"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-title-secondary">
+                        <p>Goals:</p>
+                    </div>
+                    <div class="goals-text">
+                        <div class="input-form-container">
+                            <textarea name="realisticgoal" id="realisticgoal" class="text-form" maxlength="3000" type="text" placeholder="Realistic Goal"></textarea>
+                        </div>
+                        <div class="input-form-container">
+                            <textarea name="subgoals" id="subgoals" class="text-form" maxlength="3000" type="text" placeholder="Sub-goals"></textarea>
+                        </div>
+                        <div class="input-form-container">
+                            <textarea name="dreamgoal" id="dreamgoal" class="text-form" maxlength="3000" type="text" placeholder="Dream Goal"></textarea>
+                        </div>
+                    </div>
+                    <div class="goals-why">
+                        <div class="input-form-container">
+                            <textarea name="goalswhy" id="goalswhy" class="text-form" maxlength="3000" type="text" placeholder="Why are these goals important to you?"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-title-inbody">
+                        <div style=" width: 100%; border-right: 0.5px solid #73757e;">
+                            <p>Inbody Results:</p>
+                        </div>
+                        <div>
+                            <p>Inbody Goal:</p>
+                        </div>
+                    </div>
+                    <div class="inbody-row">
+                        <div class="input-form-container">
+                            <input class="input-form" name="weightnow" id="weightnow" placeholder="Weight" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" name="musclenow" id="musclenow" placeholder="Muscle" type="text">
+                        </div>
+                        <div class="input-form-container" style="border-right: 0.5px solid #73757e;">
+                            <input class="input-form" name="fatnow" id="fatnow" placeholder="Fat" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" name="weightdream" id="weightdream" placeholder="Weight" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" name="muscledream" id="muscledream" placeholder="Muscle" type="text">
+                        </div>
+                        <div class="input-form-container" style="border-right: 0.5px solid #73757e;">
+                            <input class="input-form" name="fatdream" id="fatdream" placeholder="Fat" type="text">
+                        </div>
+                    </div>
+                    <div class="time-budy-container">
+                        <div class="input-form-container">
+                            <input class="input-form" name="pschedule" id="pschedule" placeholder="What time is better for you through out the day?" type="text">
+                        </div>
+                        <div class="input-form-container">
+                            <input class="input-form" name="trainingbudy" id="trainingbudy" placeholder="Do you have a training budy?" type="text">
+                        </div>
+                    </div>
+                    <div class="upload-button-container">
+                        <button class="upload-button" type="submit" onclick="clicked(event)">Upload</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    function clicked(e)
+    {
+        if(!confirm('Are you sure?')) {
+            e.preventDefault();
+        }
+    }
+</script>
+</html>

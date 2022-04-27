@@ -1,0 +1,76 @@
+body{
+    margin: 0;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background: url(../images/Main_bg.svg) no-repeat 50%;
+
+}
+div{
+    display: block;
+}
+img{
+    vertical-align: middle;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    height: 92px;
+    background: linear-gradient(148.29deg,#ff5d00,#e33622);
+    position: fixed;
+    z-index: 999;
+    box-shadow: 0 5px 10px -5px #333;
+}
+.home-button {
+    height: 100%;
+    width: 85px;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+}
+
+.home-button img{
+    margin-top: 22px;
+}
+
+.header .left .logo-challenge {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+}
+.header .left .logo-challenge img {
+    width: 70px;
+}
+.title {
+    font-weight: 300;
+    font-size: 20px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.menu-container{
+    height: 300px;
+    width: 30%;
+    margin: auto;
+    padding-top: 200px;
+    text-align: center;
+}
+.form-button {
+    background-color: #f58220; /* Green */ 
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;cursor: pointer;
+    width: 300px;
+}
