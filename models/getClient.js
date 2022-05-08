@@ -16,6 +16,7 @@ async function getClient(email, auth){
         const ans = {
             check: "true",
             data: {
+                id: res.data.Clients[0].Id,
                 firstname: res.data.Clients[0].FirstName,
                 lastname: res.data.Clients[0].LastName,
                 gender: res.data.Clients[0].Gender,

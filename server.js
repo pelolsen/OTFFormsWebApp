@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
-const flash = require('express-flash') // Display flash messages in the frontend
 const session = require('express-session') //Create a local-session
 const res = require('express/lib/response')
 const methodOverride = require("method-override") //To override Post method with Delete
 const path = require('path');
 const { PDFNet } = require('@pdftron/pdfnet-node')
+const fs = require('fs')
+const PDFTronLicense = require('./node_modules/@pdftron/pdfnet-node-samples/samples/LicenseKey/LicenseKey')
+const pdf2base64 = require('pdf-to-base64');
 
 app.use(session({
 	secret: 'secret',
@@ -153,13 +155,17 @@ app.get('/ciform', function(req,res){
     const phone = clientdata.phone
     const birthday = clientdata.birthday
     const email = clientdata.email
-    console.log(clientdata);
-    res.render('ciform.ejs', {firstname: firstname, lastname: lastname, gender: gender, phone: phone, birthday:birthday, email:email, sa: sa})
+    const id =clientdata.id
+    console.log(id);
+    res.render('ciform.ejs', {id: id, firstname: firstname, lastname: lastname, gender: gender, phone: phone, birthday:birthday, email:email, sa: sa})
 })
 
-app.post('/ciform', function(req, res){
+app.post('/ciform', async function(req, res){
+    const auth = req.session.authkey
+    const id = req.body.id
+    const FirstName= req.body.FirstName
     const name= req.body.FirstName + req.body.LastName
-    const email = req.body.email
+    const email = req.body.Email
     const address = req.body.StreetName + ', ' + req.body.Zip + ' ' + req.body.City
     const gender = req.body.Gender
     const phone = req.body.phone
@@ -182,33 +188,135 @@ app.post('/ciform', function(req, res){
     const muscledream = req.body.muscledream
     const fatdream = req.body.fatdream
     const pschedule = req.body.pschedule
-    const trainingbudy = req.body.trainingbody
+    const trainingbudy = req.body.trainingbudy
+    const d = new Date();
+    const datenu = d.getDate() + "-" + (d.getMonth()+1) +"-"+ d.getFullYear()
 
-    const inputPath = path.resolve(__dirname, './public/files/CI2022.pdf')
-    const outputpath = path.resolve(__dirname, `./public/files/CI-${req.body.FirstName}.pdf`)
+    console.log("This is the POST ID:" + id);
+
+
+    const main = async () =>{
+        const inputPath = './public/files/';
+        const outputPath = inputPath + 'Output/';
+        try {
+            const inputFilename = 'CI2022.pdf';
+            const outputFilename = `${FirstName}-CI-${datenu}.pdf`;
     
-    const replaceText = async() =>{
-        const pdfdoc = await PDFNet.PDFDoc.createFromFilePath(inputPath)
-        await pdfdoc.initSecurityHandler();
-        const replacer = await PDFNet.ContentReplacer.create()
-        const page = await pdfdoc.getPage(1);
-
-        await replacer.addString('date', '010101');
-        await replacer.addString('assignedsa', assignedsa);
-        await replacer.addString('name', name);
-        await replacer.addString('gender', gender);
-        await replacer.addString('telephone', phone);
-        await replacer.addString('address', address);
-        await replacer.addString('birthday', birthday);
-        await replacer.addString('email', email);
-
-        await replacer.process(page);
-
-        pdfdoc.save(outputpath, PDFNet.SDFDoc.SaveOptions.e_linearized);
+            const doc = await PDFNet.PDFDoc.createFromFilePath(inputPath + inputFilename);
+            doc.initSecurityHandler();
+    
+            const replacer = await PDFNet.ContentReplacer.create();
+            const page = await doc.getPage(1);
+            await replacer.addString('date', datenu);
+            await replacer.addString('assignedsa', assignedsa);
+            await replacer.addString('name', name);
+            await replacer.addString('gender', gender);
+            await replacer.addString('telephone', phone);
+            await replacer.addString('address', address);
+            await replacer.addString('birthday', birthday);
+            await replacer.addString('email', JSON.stringify(email));
+            await replacer.addString('findingmethod', findingmethod);
+            await replacer.addString('job', job);
+            await replacer.addString('notescl', notescl);
+            await replacer.addText(await PDFNet.Rect.init(210, 450, 575, 540), training);
+            await replacer.addText(await PDFNet.Rect.init(210, 400, 575, 440), injuries);
+            await replacer.addText(await PDFNet.Rect.init(210, 260, 310, 310), realisticgoal);
+            await replacer.addText(await PDFNet.Rect.init(210, 190, 310, 240), dreamgoal);
+            await replacer.addText(await PDFNet.Rect.init(312, 190, 435, 285), subgoals);
+            await replacer.addText(await PDFNet.Rect.init(445, 190, 570, 285), goalswhy);
+            await replacer.addString('weighnow', weighnow);
+            await replacer.addString('musclenow', musclenow);
+            await replacer.addString('fatnow', fatnow);
+            await replacer.addString('weighdream', weighdream);
+            await replacer.addString('muscledream', muscledream);
+            await replacer.addString('fatdream', fatdream);
+            await replacer.addString('pschedule', pschedule);
+            await replacer.addString('trainingbudy', trainingbudy);
+            
+            
+            await replacer.process(page);
+    
+            await doc.save(outputPath + outputFilename, PDFNet.SDFDoc.SaveOptions.e_remove_unused);
+    
+            console.log('Done. Result saved in ' + outputFilename);
+          } catch (err) {
+            console.log(err);
+            res.send('there was a problem')
+          }
     }
-
-    PDFNet.runWithCleanup()
-    
+    await PDFNet.runWithCleanup(main, PDFTronLicense.Key).catch(function(error){console.log('Error: ' + JSON.stringify(error));}).then(function(){return PDFNet.shutdown();});
+    const postDoc = require('./models/postDocument')
+    const tobase = async (id, name, auth) =>{
+        try{
+            pdf2base64(`./public/files/Output/${FirstName}-CI-${datenu}.pdf`)
+            .then(
+                (response) => {
+                    const data ={
+                        ClientId: id,
+                        File: {
+                          FileName: `${name}-CI`,
+                          MediaType: "application/pdf",
+                          Buffer: response
+                        }
+                    }
+                    postDoc(data, auth)
+                }
+            ).catch(
+                (err) =>{
+                    console.log('there was a mistake');
+                    res.send('there was a problem')
+                    //console.log(err);
+                }
+            )
+        } catch {
+            console.log('nono');
+            res.send('there was a problem')
+        }
+    }
+    await tobase(id, FirstName, auth);
+/*
+//data til at gemme formen på session
+const data = {
+    FormName: navn,
+    FormType: CI
+    FormData:{
+        altdata her
+    }
+}
+//når den så gemmes i session, kan den re-render den på formens ejs.
+*/
+    res.redirect('/formuploaded')
 })
+/*
+app.post('/uploadpdf', async function(req, res){
+    const postDoc = require('./models/postDocument')
+    const auth= req.body.auth
+    console.log(auth);
+    pdf2base64('./public/files/Output/TestForm.pdf')
+    .then(
+        (response) => {
+            const data ={
+                ClientId: '100014629',
+                File: {
+                  FileName: `testendpoint-CI`,
+                  MediaType: "application/pdf",
+                  Buffer: response
+                }
+            }
+            postDoc(data, auth)
+        }
+    ).catch(
+        (err) =>{
+            console.log('there was a mistake');
+            console.log(err);
+        }
+    )
+})
+*/
 
 app.listen(3000);
+
+
+
+
+

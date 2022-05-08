@@ -2,23 +2,31 @@
   "name": "otfformswebapp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "getclients.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "nodemon server.js"
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pelolsen/OTFFormsWebApp.git"
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pelolsen/OTFFormsWebApp/issues"
+  },
+  "homepage": "https://github.com/pelolsen/OTFFormsWebApp#readme",
   "dependencies": {
     "@pdftron/pdfnet-node": "^9.2.0-1",
-    "axios": "^0.26.1",
+    "@pdftron/pdfnet-node-samples": "^9.2.0-2",
+    "axios": "^0.27.2",
     "body-parser": "^1.20.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.3",
-    "express-flash": "0.0.2",
+    "ejs": "^3.1.7",
+    "express": "^4.18.0",
     "express-session": "^1.17.2",
     "fs": "0.0.1-security",
     "method-override": "^3.0.0",
-    "nodemon": "^2.0.15"
+    "pdf-to-base64": "^1.0.3"
   }
 }
