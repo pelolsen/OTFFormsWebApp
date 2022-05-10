@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/assets/formuploaded.css" rel="stylesheet" type="text/css" />
+    <title>Home</title>
+</head>
+<body>
+    <div class="app-background">
+        <div class="header">
+            <div class="left">
+                <div class="home-button">
+                    <img src="../public/images/home-header.svg">
+                </div>
+                <div class="logo-challenge">
+                    <img src="../public/images/icon_home.svg">
+                    <div class="title">Orange-Forms</div>
+    
+                </div>
+            </div>
+            <div class="right">
+                
+                <div style="height: 50px; width: 50px; padding-top: 26px;">
+                    <form action="/logout?_method=DELETE" method="POST">
+                        <button type="submit" style="background: none; border: none; cursor: pointer;">
+                            <div style="width: 100%; height: 100%;">
+                                <img src="../public/images/logout.svg" style="width: 100%;">
+                            </div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="rest-container">
+            <div class="form-container">
+                <div class="pind">
+                    <img src="../public/images/flueben.svg">
+                </div>
+                <h1>Form Uploaded!</h1>
+                <h2>Do you which to save this form in the session for now?</h2>
+                <div class="yesno-container">
+                    <div class="upload-button-container">
+                        <button class="upload-button">Yes</button>
+                    </div>
+                    <div class="upload-button-container">
+                        <button class="upload-button" onclick="window.location.href='/home'">No</button>
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+    </div>
+</body>
+</html>

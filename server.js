@@ -273,7 +273,12 @@ app.post('/ciform', async function(req, res){
             res.send('there was a problem')
         }
     }
-    await tobase(id, FirstName, auth);
+    try{
+        await tobase(id, FirstName, auth);
+        res.redirect('/formuploaded')
+    } catch{
+        res.redirect('/erroruploading')
+    }
 /*
 //data til at gemme formen på session
 const data = {
@@ -285,8 +290,16 @@ const data = {
 }
 //når den så gemmes i session, kan den re-render den på formens ejs.
 */
-    res.redirect('/formuploaded')
+}) 
+
+app.get('/formuploaded', function (req,res){
+    res.render('formuploaded.ejs')
 })
+app.get('/download', function(req, res){
+    const file = `${__dirname}/public/files/Output/TestForm.pdf`;
+    res.download(file); // Set disposition and send it.
+    res.render('errordownload.ejs')
+  });
 /*
 app.post('/uploadpdf', async function(req, res){
     const postDoc = require('./models/postDocument')
